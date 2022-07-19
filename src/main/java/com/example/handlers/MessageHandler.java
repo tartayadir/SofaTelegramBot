@@ -1,57 +1,75 @@
 package com.example.handlers;
 
+import com.example.answerelements.Compliments;
+import com.example.answerelements.WelcomePhrases;
 import com.example.messagesenders.MessageSender;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.objects.MessageEntity;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class MessageHandler implements Handler<Message> {
 
-    private MessageSender messageSender;
+    private final MessageSender messageSender;
     //❤️😁😌🎃
 
-    private List<String> compliments = Arrays.asList(
-            "Как только встретимся, первым делом пойдем мне за очками. А то с таким солнышком как ты, мне они " +
-                    "понадабятся даже в пасмурную погоду❤))",
-            "\uD83D\uDE0C❤️ Красивее тебя могут быть лишь твои нежно голубые оченятка, взгляд которых заставляет" +
-                    " влюбляются меня все сильнее и сильнее с каждым взглядом \uD83D\uDC99 "
-    );
+    public MessageHandler(MessageSender messageSender) {
+        this.messageSender = messageSender;
+    }
+
     @Override
+    @SneakyThrows
     public void choose(Message message) {
 
+        if (message.hasText() && message.hasEntities()) {
+            Optional<MessageEntity> commandEntity =
+                    message.getEntities().stream().filter(e -> "bot_command".equals(e.getType())).findFirst();
+            if (commandEntity.isPresent()) {
+                String command =
+                        message
+                                .getText()
+                                .substring(commandEntity.get().getOffset(), commandEntity.get().getLength());
+                SendMessage sendMessage;
 
+                switch (command) {
+                    case "/start": {
 
-//        if(message.hasText()){
-//
-//            String command = message.getText();
-//            SendMessage sendMessage = new SendMessage();
-//            sendMessage.setChatId(message.getChatId());
-//
-//            switch (command){
-//                case "/get_compliment" : {
-//                    String compliment = compliments.get((int)(Math.random()*(compliments.size()-1)));
-//                    sendMessage.setText(compliment);
-//                }
-//            }
-////            InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-////            List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
-////            keyboard.add(
-////                    Collections.singletonList(
-////                            InlineKeyboardButton.builder()
-////                                    .text("Новий вірш")
-////                                    .callbackData("next_poem")
-////                                    .build()));
-////            inlineKeyboardMarkup.setKeyboard(keyboard);
-////            sendMessage.setReplyMarkup(inlineKeyboardMarkup);
-//            messageSender.sendMessage(sendMessage);
-//        }
+                        List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
+                        buttons.add(
+                                Arrays.asList(
+                                        InlineKeyboardButton.builder()
+                                                .text("Случайная песня")
+                                                .callbackData("Song" )
+                                                .build(),
+                                        InlineKeyboardButton.builder()
+                                                .text("Случайное фото")
+                                                .callbackData("Photo" )
+                                                .build(),
+                                        InlineKeyboardButton.builder()
+                                                .text("Комплимент")
+                                                .callbackData("Compliment" )
+                                                .build()));
+                        String welcomePhrases = WelcomePhrases.randomWelcomePhrases();
+                        sendMessage = SendMessage.
+                                builder().
+                                text(welcomePhrases).
+                                chatId(message.getChatId()).
+                                replyMarkup(InlineKeyboardMarkup.builder().keyboard(buttons).build()).
+                                build();
+                        messageSender.sendMessage(sendMessage);
+                    }
+                }
+            }
+        }
     }
 }

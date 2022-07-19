@@ -26,5 +26,13 @@ public class MessageSenderImpl implements MessageSender {
         this.helloWorldBot = helloWorldBot;
     }
 
+    @Override
+    public void sendEditMessage(EditMessageText editMessageText) {
+        try {
+            helloWorldBot.execute(editMessageText);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
+    }
 }
