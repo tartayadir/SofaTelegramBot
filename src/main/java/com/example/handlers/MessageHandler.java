@@ -1,15 +1,12 @@
 package com.example.handlers;
 
-import com.example.answerelements.Compliments;
 import com.example.answerelements.WelcomePhrases;
 import com.example.messagesenders.MessageSender;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.MessageEntity;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.util.ArrayList;
@@ -21,14 +18,31 @@ import java.util.Optional;
 public class MessageHandler implements Handler<Message> {
 
     private final MessageSender messageSender;
+    public static  List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
     //❤️😁😌🎃
 
     public MessageHandler(MessageSender messageSender) {
         this.messageSender = messageSender;
     }
 
+    static {
+        buttons.add(
+                Arrays.asList(
+                        InlineKeyboardButton.builder()
+                                .text("Случайная песня")
+                                .callbackData("Song" )
+                                .build(),
+                        InlineKeyboardButton.builder()
+                                .text("Случайное фото")
+                                .callbackData("Photo" )
+                                .build(),
+                        InlineKeyboardButton.builder()
+                                .text("Комплимент")
+                                .callbackData("Compliment" )
+                                .build()));
+    }
+
     @Override
-    @SneakyThrows
     public void choose(Message message) {
 
         if (message.hasText() && message.hasEntities()) {
@@ -41,33 +55,15 @@ public class MessageHandler implements Handler<Message> {
                                 .substring(commandEntity.get().getOffset(), commandEntity.get().getLength());
                 SendMessage sendMessage;
 
-                switch (command) {
-                    case "/start": {
-
-                        List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
-                        buttons.add(
-                                Arrays.asList(
-                                        InlineKeyboardButton.builder()
-                                                .text("Случайная песня")
-                                                .callbackData("Song" )
-                                                .build(),
-                                        InlineKeyboardButton.builder()
-                                                .text("Случайное фото")
-                                                .callbackData("Photo" )
-                                                .build(),
-                                        InlineKeyboardButton.builder()
-                                                .text("Комплимент")
-                                                .callbackData("Compliment" )
-                                                .build()));
-                        String welcomePhrases = WelcomePhrases.randomWelcomePhrases();
-                        sendMessage = SendMessage.
-                                builder().
-                                text(welcomePhrases).
-                                chatId(message.getChatId()).
-                                replyMarkup(InlineKeyboardMarkup.builder().keyboard(buttons).build()).
-                                build();
-                        messageSender.sendMessage(sendMessage);
-                    }
+                if ("/start".equals(command)) {
+                    String welcomePhrases = WelcomePhrases.randomWelcomePhrases();
+                    sendMessage = SendMessage.
+                            builder().
+                            text(welcomePhrases).
+                            chatId(String.valueOf(message.getChatId())).
+                            replyMarkup(InlineKeyboardMarkup.builder().keyboard(buttons).build()).
+                            build();
+                    messageSender.sendMessage(sendMessage);
                 }
             }
         }

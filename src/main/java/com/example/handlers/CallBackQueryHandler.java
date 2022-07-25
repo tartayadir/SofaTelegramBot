@@ -1,16 +1,15 @@
 package com.example.handlers;
 
 import com.example.answerelements.Compliments;
+import com.example.answerelements.Photos;
+import com.example.answerelements.Songs;
 import com.example.messagesenders.MessageSender;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
+import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @Component
 public class CallBackQueryHandler implements Handler<CallbackQuery>{
@@ -27,14 +26,44 @@ public class CallBackQueryHandler implements Handler<CallbackQuery>{
 
         switch (callbackQuery.getData()){
             case "Song" :
-                System.out.println("Song");
+
+                SendAudio sendAudio = SendAudio.
+                        builder().
+                        audio(Songs.randomSong()).
+                        chatId(String.valueOf(callbackQuery.getMessage().getChatId())).
+                        replyMarkup(InlineKeyboardMarkup.builder().keyboard(MessageHandler.buttons).build()).
+                        build();
+
+                System.out.println(sendAudio);
+                messageSender.sendAudio(sendAudio);
                 break;
-            case "Photo" :
-                System.out.println("Photo");
+            case "Photo" :{
+
+                SendPhoto sendPhoto = SendPhoto.
+                        builder().allowSendingWithoutReply(true).
+                        replyToMessageId(callbackQuery.getMessage().getMessageId()).
+                        caption("").
+                        photo(Photos.randomPhoto()).
+                        chatId(String.valueOf(callbackQuery.getMessage().getChatId())).
+                        replyMarkup(InlineKeyboardMarkup.builder().keyboard(MessageHandler.buttons).build()).
+                        build();
+
+                System.out.println(sendPhoto);
+                messageSender.sendPhoto(sendPhoto);
                 break;
-            case "Compliment" :
-                System.out.println("Compliment");
+            }
+            case "Compliment" :{
+                String compliment = Compliments.randomCompliment();
+                SendMessage sendMessage = SendMessage.
+                        builder().
+                        text(compliment).
+                        chatId(String.valueOf(callbackQuery.getMessage().getChatId())).
+                        replyMarkup(InlineKeyboardMarkup.builder().keyboard(MessageHandler.buttons).build()).
+                        build();
+                System.out.println(sendMessage);
+                messageSender.sendMessage(sendMessage);
                 break;
+            }
         }
     }
 }
