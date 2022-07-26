@@ -10,21 +10,21 @@ public class Photos implements AnswerElements{
 
     private static final List<String> pathsToPhotos = Arrays.asList(
             "C:/Tomcats/SofaBot/demo/src/main/resources/images/photo11.jpg",
-            "images/photo_2022-07-20_13-19-37.jpg",
-            "images/photo_2022-07-20_13-19-44.jpg",
-            "images/photo_2022-07-20_13-19-48.jpg",
-            "images/photo_2022-07-20_13-19-51.jpg",
-            "images/photo_2022-07-20_13-19-58.jpg",
-            "images/photo_2022-07-20_13-20-02.jpg",
-            "images/photo_2022-07-20_13-20-30.jpg",
-            "images/photo_2022-07-20_13-20-37.jpg",
-            "images/photo_2022-07-20_13-20-42.jpg",
-            "images/photo_2022-07-20_13-20-52.jpg",
-            "images/photo_2022-07-20_13-20-59.jpg",
-            "images/photo24р.jpg",
-            "images/photo51р.jpg",
-            "images/photo112р.jpg",
-            "images/photo135р.jpg"
+            "C:/Tomcats/SofaBot/demo/src/main/resources/images/photo_2022-07-20_13-19-37.jpg",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/images/photo_2022-07-20_13-19-44.jpg",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/images/photo_2022-07-20_13-19-48.jpg",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/images/photo_2022-07-20_13-19-51.jpg",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/images/photo_2022-07-20_13-19-58.jpg",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/images/photo_2022-07-20_13-20-02.jpg",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/images/photo_2022-07-20_13-20-30.jpg",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/images/photo_2022-07-20_13-20-37.jpg",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/images/photo_2022-07-20_13-20-42.jpg",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/images/photo_2022-07-20_13-20-52.jpg",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/images/photo_2022-07-20_13-20-59.jpg",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/images/photo24р.jpg",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/images/photo51р.jpg",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/images/photo112р.jpg",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/images/photo135р.jpg"
 
 
     );
@@ -35,8 +35,7 @@ public class Photos implements AnswerElements{
         InputFile inputFile = new InputFile();
 
         try {
-             //photo = ResourceUtils.getFile(pathsToPhotos.get((int) (Math.random() * (pathsToPhotos.size()))));
-             photo = ResourceUtils.getFile(pathsToPhotos.get(1));
+             photo = ResourceUtils.getFile(pathsToPhotos.get((int) (Math.random() * (pathsToPhotos.size()))));
              inputFile = new InputFile(photo);
 
         }catch (IOException ioException){

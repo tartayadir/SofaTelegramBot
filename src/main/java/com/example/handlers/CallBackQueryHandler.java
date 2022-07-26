@@ -34,7 +34,6 @@ public class CallBackQueryHandler implements Handler<CallbackQuery>{
                         replyMarkup(InlineKeyboardMarkup.builder().keyboard(MessageHandler.buttons).build()).
                         build();
 
-                System.out.println(sendAudio);
                 messageSender.sendAudio(sendAudio);
                 break;
             case "Photo" :{
@@ -48,7 +47,6 @@ public class CallBackQueryHandler implements Handler<CallbackQuery>{
                         replyMarkup(InlineKeyboardMarkup.builder().keyboard(MessageHandler.buttons).build()).
                         build();
 
-                System.out.println(sendPhoto);
                 messageSender.sendPhoto(sendPhoto);
                 break;
             }
@@ -60,7 +58,7 @@ public class CallBackQueryHandler implements Handler<CallbackQuery>{
                         chatId(String.valueOf(callbackQuery.getMessage().getChatId())).
                         replyMarkup(InlineKeyboardMarkup.builder().keyboard(MessageHandler.buttons).build()).
                         build();
-                System.out.println(sendMessage);
+
                 messageSender.sendMessage(sendMessage);
                 break;
             }

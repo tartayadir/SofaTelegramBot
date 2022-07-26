@@ -15,21 +15,12 @@ public class MessageSenderImpl implements MessageSender {
 
     @Override
     public void sendAudio(SendAudio sendAudio) {
-        try {
-            helloWorldBot.execute(sendAudio);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
+        helloWorldBot.executeAsync(sendAudio);
     }
 
     @Override
     public void sendPhoto(SendPhoto sendPhoto){
-        try {
-
-            helloWorldBot.execute(sendPhoto);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
+         helloWorldBot.executeAsync(sendPhoto);
     }
 
     @Override

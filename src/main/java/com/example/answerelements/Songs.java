@@ -11,13 +11,13 @@ import java.util.List;
 public class Songs {
 
     private static final List<String> pathToSongs = Arrays.asList(
-            "songs/rjiLgGENnhw1nXep.mp3",
-            "songs/F2TA7ViEs3L1eN9i.mp3",
-            "songs/Edward Sharpe amp The Magnetic Zeros-Home.mp3",
-            "songs/Dermot Kennedy-Power Over Me.mp3",
-            "songs/68387754.mp3",
-            "songs/17955170.mp3",
-            "songs/2step.mp3"
+            "C:/Tomcats/SofaBot/demo/src/main/resources/songs/rjiLgGENnhw1nXep.mp3",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/songs/F2TA7ViEs3L1eN9i.mp3",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/songs/Edward Sharpe amp The Magnetic Zeros-Home.mp3",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/songs/Dermot Kennedy-Power Over Me.mp3",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/songs/68387754.mp3",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/songs/17955170.mp3",
+            "C:/Tomcats/SofaBot/demo/src/main/resources/songs/2step.mp3"
     );
 
     public static InputFile randomSong(){
@@ -26,7 +26,6 @@ public class Songs {
 
         try {
             File song = ResourceUtils.getFile(pathToSongs.get((int) (Math.random() * (pathToSongs.size()))));
-            //File song = ResourceUtils.getFile(pathToSongs.get(0));
             inputFile = new InputFile(song);
 
         }catch (IOException ioException){
