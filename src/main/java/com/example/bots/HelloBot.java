@@ -38,10 +38,4 @@ public class HelloBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         processor.process(update);
     }
-
-    public static void main(String[] args) throws TelegramApiException {
-        HelloBot telegramBot = new HelloBot();
-        TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
-        telegramBotsApi.registerBot(telegramBot);
-    }
 }
