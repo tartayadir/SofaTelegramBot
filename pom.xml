@@ -14,7 +14,11 @@
 	<name>SofaBot</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
+
 		<java.version>17</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<mainClass>com.example.config.SofaBotApplication</mainClass>
+
 	</properties>
 	<dependencies>
 		<dependency>
